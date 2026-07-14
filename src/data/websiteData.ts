@@ -10,7 +10,8 @@ import {
   ClassItem, 
   Testimonial, 
   ClinicSettings, 
-  FutureBlogItem 
+  FutureBlogItem,
+  FutureBlogItem
 } from '../types';
 
 export const clinicSettings: ClinicSettings = {

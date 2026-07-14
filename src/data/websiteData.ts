@@ -75,7 +75,7 @@ export const services: ServiceItem[] = [
     id: "child-psychology",
     title: "Child Psychology",
     category: "Pediatric & Family Care",
-    iconName: "Baby",
+    iconName: "Baby1",
     shortDescription: "Specialized, warm support for developmental, emotional, and behavioral challenges in young children.",
     fullDescription: "Childhood is a phase of rapid development, and children often communicate their emotional struggles through behavior rather than words. Dr. Shripuja offers specialized play therapy, behavior management, and emotional regulation guidance in a welcoming, low-stimulus environment, collaborating closely with parents to support the child's psychological development.",
     symptoms: [

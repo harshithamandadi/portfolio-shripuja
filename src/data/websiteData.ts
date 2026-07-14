@@ -10,7 +10,6 @@ import {
   ClassItem, 
   Testimonial, 
   ClinicSettings, 
-  FutureBlogItem,
   FutureBlogItem
 } from '../types';
 

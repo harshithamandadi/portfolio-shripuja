@@ -1,0 +1,6 @@
+{
+  "name": "Calm Mind Wellness",
+  "description": "Dr. Shripuja Siddamsetty — Clinical Psychologist & Psychotherapist. Compassionate evidence-based adult therapy, couples counseling, child psychology, developmental assessments, and mindfulness workshops.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

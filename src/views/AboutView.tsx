@@ -18,7 +18,7 @@ import {
   Calendar
 } from 'lucide-react';
 import { motion } from 'motion/react';
-import { clinicSettings } from '../data/websiteData';
+import { useWebsiteData } from '../context/WebsiteDataContext';
 
 interface AboutViewProps {
   onPageChange: (page: string) => void;
@@ -26,6 +26,7 @@ interface AboutViewProps {
 }
 
 export default function AboutView({ onPageChange, isDarkMode }: AboutViewProps) {
+  const { clinicSettings } = useWebsiteData();
   
   const treatmentPhilosophies = [
     {
@@ -128,7 +129,7 @@ export default function AboutView({ onPageChange, isDarkMode }: AboutViewProps) 
             isDarkMode ? 'border-neutral-800' : 'border-neutral-200/50'
           }`}>
             <img 
-              src="https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=600" 
+              src="/dr-shripuja.jpg" 
               alt="Dr. Shripuja Siddamsetty" 
               referrerPolicy="no-referrer"
               className="w-full h-[400px] object-cover"
@@ -351,12 +352,20 @@ export default function AboutView({ onPageChange, isDarkMode }: AboutViewProps) 
         <p className="text-xs font-light text-neutral-500 max-w-xl mx-auto mb-8 leading-relaxed">
           Book an in-person session in Metro City or a private Telehealth session from any location.
         </p>
-        <button
-          onClick={() => onPageChange('book')}
-          className="px-8 py-3.5 bg-forest hover:bg-forest-dark text-white font-semibold text-xs rounded-full shadow cursor-pointer"
-        >
-          Schedule My Intake Session
-        </button>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <button
+            onClick={() => onPageChange('book')}
+            className="px-8 py-3.5 bg-forest hover:bg-forest-dark text-white font-semibold text-xs rounded-full shadow cursor-pointer w-full sm:w-auto"
+          >
+            Schedule My Intake Session
+          </button>
+          <button
+            onClick={() => onPageChange('payment')}
+            className="px-8 py-3.5 bg-sage hover:bg-sage-dark text-[#2B2B2B] font-semibold text-xs rounded-full shadow-sm hover:shadow cursor-pointer w-full sm:w-auto"
+          >
+            Pay Consultation Online (Razorpay)
+          </button>
+        </div>
       </section>
 
     </div>

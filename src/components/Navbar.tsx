@@ -4,9 +4,9 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon, PhoneCall, Heart } from 'lucide-react';
+import { Menu, X, Sun, Moon, PhoneCall, Heart, CreditCard } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { clinicSettings } from '../data/websiteData';
+import { useWebsiteData } from '../context/WebsiteDataContext';
 
 interface NavbarProps {
   currentPage: string;
@@ -16,6 +16,7 @@ interface NavbarProps {
 }
 
 export default function Navbar({ currentPage, onPageChange, isDarkMode, onToggleDarkMode }: NavbarProps) {
+  const { clinicSettings } = useWebsiteData();
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -42,6 +43,8 @@ export default function Navbar({ currentPage, onPageChange, isDarkMode, onToggle
     { name: 'Services', id: 'services' },
     { name: 'Podcasts', id: 'podcasts' },
     { name: 'Classes', id: 'classes' },
+    { name: 'Pay Online', id: 'payment' },
+    { name: 'Invoice', id: 'invoice' },
     { name: 'Contact', id: 'contact' },
   ];
 
@@ -54,7 +57,7 @@ export default function Navbar({ currentPage, onPageChange, isDarkMode, onToggle
   return (
     <header 
       id="main-nav-header"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 w-full max-w-full transition-all duration-300 ${
         isScrolled 
           ? 'glass shadow-md border-b border-white/10 dark:border-white/5' 
           : 'bg-transparent border-b border-transparent'
@@ -91,8 +94,8 @@ export default function Navbar({ currentPage, onPageChange, isDarkMode, onToggle
             </div>
           </button>
 
-          {/* Desktop Navigation */}
-          <nav id="desktop-navigation-links" className="hidden md:flex items-center gap-8">
+          {/* Desktop Navigation (Visible on lg: 1024px and wider) */}
+          <nav id="desktop-navigation-links" className="hidden lg:flex items-center gap-3.5 xl:gap-6">
             {navLinks.map((link) => {
               const isActive = currentPage === link.id;
               return (
@@ -100,10 +103,10 @@ export default function Navbar({ currentPage, onPageChange, isDarkMode, onToggle
                   key={link.id}
                   id={`nav-link-${link.id}`}
                   onClick={() => handleLinkClick(link.id)}
-                  className={`relative py-2 text-sm font-medium tracking-wide transition-colors focus:outline-none cursor-pointer ${
+                  className={`relative py-1.5 text-xs xl:text-sm font-medium tracking-wide transition-colors focus:outline-none cursor-pointer whitespace-nowrap ${
                     isActive 
                       ? 'text-forest font-semibold' 
-                      : isDarkMode ? 'text-neutral-300 hover:text-white' : 'text-neutral-600 hover:text-charcoal'
+                      : isDarkMode ? 'text-neutral-300 hover:text-white' : 'text-neutral-700 hover:text-charcoal'
                   }`}
                 >
                   {link.name}
@@ -120,19 +123,20 @@ export default function Navbar({ currentPage, onPageChange, isDarkMode, onToggle
           </nav>
 
           {/* Right Action Icons Panel */}
-          <div id="navbar-actions-panel" className="hidden md:flex items-center gap-4">
+          <div id="navbar-actions-panel" className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
             {/* Quick Contact Shortlink */}
             <a 
               href={`tel:${clinicSettings.phone}`}
               id="navbar-phone-action"
-              className={`flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full transition-all border ${
+              className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 xl:px-3 py-1.5 rounded-full transition-all border whitespace-nowrap ${
                 isDarkMode 
                   ? 'border-neutral-700 text-neutral-300 hover:text-white hover:bg-neutral-800' 
-                  : 'border-neutral-200 text-neutral-600 hover:text-charcoal hover:bg-neutral-100'
+                  : 'border-neutral-300 text-neutral-800 hover:text-charcoal hover:bg-neutral-100 shadow-2xs'
               }`}
             >
-              <PhoneCall className="w-3.5 h-3.5 text-sage-dark" />
-              <span>Call Doctor</span>
+              <PhoneCall className="w-3.5 h-3.5 text-forest" />
+              <span className="hidden xl:inline">Call Doctor</span>
+              <span className="xl:hidden">Call</span>
             </a>
 
             {/* Aesthetic Theme Controller */}
@@ -142,18 +146,18 @@ export default function Navbar({ currentPage, onPageChange, isDarkMode, onToggle
               className={`p-2 rounded-full transition-all focus:outline-none cursor-pointer ${
                 isDarkMode 
                   ? 'text-yellow-400 hover:bg-neutral-800' 
-                  : 'text-neutral-500 hover:bg-neutral-100 hover:text-charcoal'
+                  : 'text-neutral-700 hover:bg-neutral-100 hover:text-charcoal'
               }`}
               title={isDarkMode ? "Light Mode" : "Dark Mode"}
             >
-              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {isDarkMode ? <Sun className="w-4.5 h-4.5" /> : <Moon className="w-4.5 h-4.5" />}
             </button>
 
             {/* High-Impact Booking CTA */}
             <button
               id="navbar-booking-cta"
               onClick={() => handleLinkClick('book')}
-              className={`px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide transition-all shadow-sm hover:shadow hover:-translate-y-0.5 cursor-pointer ${
+              className={`px-3.5 xl:px-5 py-2 rounded-full text-xs font-semibold tracking-wide transition-all shadow-xs hover:shadow hover:-translate-y-0.5 cursor-pointer whitespace-nowrap ${
                 currentPage === 'book'
                   ? 'bg-forest text-white'
                   : 'bg-sage hover:bg-sage-dark text-[#2B2B2B]'
@@ -163,14 +167,14 @@ export default function Navbar({ currentPage, onPageChange, isDarkMode, onToggle
             </button>
           </div>
 
-          {/* Mobile Navigation Controls */}
-          <div className="flex md:hidden items-center gap-2">
+          {/* Mobile Navigation Controls (Visible on screens < 1024px) */}
+          <div className="flex lg:hidden items-center gap-2">
             {/* Dark mode button for mobile */}
             <button
               id="navbar-theme-toggle-mobile"
               onClick={onToggleDarkMode}
               className={`p-2 rounded-full transition-all focus:outline-none cursor-pointer ${
-                isDarkMode ? 'text-yellow-400' : 'text-neutral-500'
+                isDarkMode ? 'text-yellow-400' : 'text-neutral-700'
               }`}
             >
               {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
@@ -199,10 +203,10 @@ export default function Navbar({ currentPage, onPageChange, isDarkMode, onToggle
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className={`md:hidden border-b ${
+            className={`lg:hidden border-b shadow-xl ${
               isDarkMode 
-                ? 'bg-neutral-950 border-neutral-800 text-white' 
-                : 'bg-[#FCFCFA] border-neutral-200 text-charcoal'
+                ? 'bg-neutral-950/98 border-neutral-800 text-white' 
+                : 'bg-white/98 border-neutral-200 text-charcoal backdrop-blur-xl'
             }`}
           >
             <div className="px-4 pt-2 pb-6 space-y-3">
@@ -233,6 +237,16 @@ export default function Navbar({ currentPage, onPageChange, isDarkMode, onToggle
                   <span>Call {clinicSettings.phone}</span>
                 </a>
                 
+                <button
+                  id="navbar-mobile-pay-cta"
+                  onClick={() => handleLinkClick('payment')}
+                  className="w-full py-3 bg-forest text-white text-center font-semibold text-sm rounded-xl shadow-sm cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <CreditCard className="w-4 h-4" />
+                  <span>Pay Consultation Online</span>
+                </button>
+
+
                 <button
                   id="navbar-mobile-booking-cta"
                   onClick={() => handleLinkClick('book')}

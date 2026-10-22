@@ -21,7 +21,7 @@ import {
   Info
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { services } from '../data/websiteData';
+import { useWebsiteData } from '../context/WebsiteDataContext';
 import { ServiceItem } from '../types';
 
 interface ServicesViewProps {
@@ -31,6 +31,7 @@ interface ServicesViewProps {
 }
 
 export default function ServicesView({ onPageChange, isDarkMode, preSelectedServiceId }: ServicesViewProps) {
+  const { services } = useWebsiteData();
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [expandedFaqIndex, setExpandedFaqIndex] = useState<{ [key: string]: number }>({});
 
@@ -157,7 +158,7 @@ export default function ServicesView({ onPageChange, isDarkMode, preSelectedServ
                 <h4 className={`font-serif text-sm font-semibold uppercase tracking-wider ${isDarkMode ? 'text-neutral-200' : 'text-charcoal'}`}>
                   Overview
                 </h4>
-                <p className="text-xs font-light text-neutral-500 leading-relaxed">
+                <p className="text-xs font-normal text-neutral-700 dark:text-neutral-300 leading-relaxed">
                   {service.fullDescription}
                 </p>
               </div>
@@ -171,9 +172,9 @@ export default function ServicesView({ onPageChange, isDarkMode, preSelectedServ
                   </h5>
                   <ul className="space-y-2.5">
                     {service.symptoms.map((sym, sIdx) => (
-                      <li key={sIdx} className="flex gap-2 text-[11px] font-light leading-relaxed">
+                      <li key={sIdx} className="flex gap-2 text-[11px] font-normal leading-relaxed">
                         <span className="text-red-400 shrink-0 select-none">•</span>
-                        <span className={isDarkMode ? 'text-neutral-400' : 'text-neutral-500'}>{sym}</span>
+                        <span className={isDarkMode ? 'text-neutral-300' : 'text-neutral-800'}>{sym}</span>
                       </li>
                     ))}
                   </ul>
@@ -186,9 +187,9 @@ export default function ServicesView({ onPageChange, isDarkMode, preSelectedServ
                   </h5>
                   <ul className="space-y-2.5">
                     {service.benefits.map((ben, bIdx) => (
-                      <li key={bIdx} className="flex gap-2 text-[11px] font-light leading-relaxed">
+                      <li key={bIdx} className="flex gap-2 text-[11px] font-normal leading-relaxed">
                         <Check className="w-3.5 h-3.5 text-sage-dark shrink-0 mt-0.5" />
-                        <span className={isDarkMode ? 'text-neutral-400' : 'text-neutral-500'}>{ben}</span>
+                        <span className={isDarkMode ? 'text-neutral-300' : 'text-neutral-800'}>{ben}</span>
                       </li>
                     ))}
                   </ul>
@@ -233,7 +234,7 @@ export default function ServicesView({ onPageChange, isDarkMode, preSelectedServ
                               transition={{ duration: 0.25, ease: 'easeInOut' }}
                               className="overflow-hidden"
                             >
-                              <div className="px-4 pb-4 pt-1 text-[11px] font-light text-neutral-500 leading-relaxed border-t border-neutral-200/40 dark:border-neutral-800/40 mt-1">
+                              <div className="px-4 pb-4 pt-1 text-[11px] font-normal text-neutral-700 dark:text-neutral-300 leading-relaxed border-t border-neutral-200/40 dark:border-neutral-800/40 mt-1">
                                 {faq.answer}
                               </div>
                             </motion.div>
@@ -247,7 +248,7 @@ export default function ServicesView({ onPageChange, isDarkMode, preSelectedServ
 
               {/* Direct Booking Action Bar */}
               <div className="pt-6 border-t border-neutral-200/50 dark:border-neutral-800 flex justify-between items-center flex-wrap gap-4">
-                <p className="text-[10px] text-neutral-500 font-sans tracking-wide">
+                <p className="text-[10px] text-neutral-600 dark:text-neutral-400 font-sans tracking-wide">
                   Licensed Doctor Ph.D. Intake | Safe & Secure HIPAA Portal
                 </p>
                 <button
@@ -269,7 +270,7 @@ export default function ServicesView({ onPageChange, isDarkMode, preSelectedServ
         <h3 className={`text-2xl font-serif font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-charcoal'}`}>
           Unsure Which Therapy Best Fits Your Context?
         </h3>
-        <p className="text-xs font-light text-neutral-500 max-w-lg mx-auto mb-8 leading-relaxed">
+        <p className="text-xs font-normal text-neutral-700 dark:text-neutral-300 max-w-lg mx-auto mb-8 leading-relaxed">
           Contact our front desk clinical coordinators. We will hold a brief, free, completely confidential 10-minute diagnostic phone check-in to guide you.
         </p>
         <button

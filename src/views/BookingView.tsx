@@ -680,6 +680,20 @@ export default function BookingView({ isDarkMode, preSelectedServiceId, onClearP
                 <div className="absolute top-1/2 -right-3 w-6 h-6 rounded-full bg-[#FCFCFA]/80 dark:bg-neutral-900/80 border-l border-neutral-200/50 dark:border-neutral-800 -translate-y-1/2" />
 
                 <div className="space-y-4">
+                  {/* Doctor badge with authentic photo */}
+                  <div className="flex items-center gap-3 pb-3 border-b border-neutral-200/50 dark:border-neutral-800">
+                    <img 
+                      src="/dr-shripuja.jpg" 
+                      alt="Dr. Shripuja Siddamsetty" 
+                      referrerPolicy="no-referrer"
+                      className="w-10 h-10 rounded-full object-cover border border-forest/20 shadow-sm shrink-0"
+                    />
+                    <div>
+                      <h5 className="font-serif text-xs font-bold text-forest">Dr. Shripuja Siddamsetty, Ph.D.</h5>
+                      <p className="text-[9px] text-neutral-400">Clinical Psychologist & Psychotherapist</p>
+                    </div>
+                  </div>
+
                   <div className="flex justify-between items-start border-b border-dashed border-neutral-300 dark:border-neutral-800 pb-4">
                     <div>
                       <span className="block text-[8px] uppercase font-bold tracking-widest text-neutral-400 font-sans">Patient Intake:</span>
@@ -730,12 +744,20 @@ export default function BookingView({ isDarkMode, preSelectedServiceId, onClearP
                 <p className="text-[10px] text-neutral-500 font-sans leading-relaxed">
                   Confirmation credentials and receipt bills have been dispatched to <strong>{patientDetails.email}</strong>. Kindly dial {clinicSettings.phone} for immediate assistance.
                 </p>
-                <button
-                  onClick={handleResetBooking}
-                  className="w-full py-3.5 bg-forest hover:bg-forest-dark text-white font-semibold text-xs rounded-full shadow cursor-pointer"
-                >
-                  Book Another Appointment
-                </button>
+                <div className="flex flex-col gap-2">
+                  <a
+                    href="#payment"
+                    className="w-full py-3.5 bg-sage hover:bg-sage-dark text-[#2B2B2B] font-semibold text-xs rounded-full shadow-sm text-center cursor-pointer transition-colors"
+                  >
+                    Pay Consultation Fee Online (Razorpay) &rarr;
+                  </a>
+                  <button
+                    onClick={handleResetBooking}
+                    className="w-full py-3.5 bg-forest hover:bg-forest-dark text-white font-semibold text-xs rounded-full shadow cursor-pointer transition-colors"
+                  >
+                    Book Another Appointment
+                  </button>
+                </div>
               </div>
 
             </motion.div>

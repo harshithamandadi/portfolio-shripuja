@@ -19,10 +19,12 @@ import {
   ChevronRight,
   ShieldCheck,
   Smile,
-  UserCheck
+  UserCheck,
+  CreditCard
 } from 'lucide-react';
 import { motion } from 'motion/react';
-import { clinicSettings, services, podcasts, classes, testimonials } from '../data/websiteData';
+import { useWebsiteData } from '../context/WebsiteDataContext';
+import SocialFeed from '../components/SocialFeed';
 
 interface HomeViewProps {
   onPageChange: (page: string) => void;
@@ -30,6 +32,7 @@ interface HomeViewProps {
 }
 
 export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
+  const { clinicSettings, services, podcasts, classes, testimonials } = useWebsiteData();
   
   // Choose first 3 services for Home preview
   const featuredServices = services.slice(0, 3);
@@ -38,7 +41,21 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
   const featuredPodcasts = podcasts.slice(0, 2);
 
   // Choose first class for preview
-  const featuredClass = classes[0];
+  const featuredClass = classes[0] || {
+    id: 'class-1',
+    title: 'Mindfulness-Based Stress Reduction',
+    category: 'Mindfulness',
+    description: 'Transformative immersive experience.',
+    date: 'Next Saturday',
+    time: '6:00 PM',
+    duration: '90 Mins',
+    instructor: 'Dr. Shripuja',
+    capacity: 25,
+    registeredCount: 15,
+    fee: '$150',
+    image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600',
+    countdownTarget: '2026-10-15T18:00:00'
+  };
 
   const journeySteps = [
     {
@@ -122,8 +139,8 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className={`text-base sm:text-lg leading-relaxed max-w-xl font-light ${
-                isDarkMode ? 'text-neutral-300' : 'text-neutral-600'
+              className={`text-base sm:text-lg leading-relaxed max-w-xl font-normal ${
+                isDarkMode ? 'text-neutral-300' : 'text-neutral-800'
               }`}
             >
               Dr. Shripuja Siddamsetty provides evidence-based, clinical psychotherapy with high empathy. Helping adults, teenagers, and couples cultivate psychological resilience, heal from chronic stress, and discover mental clarity.
@@ -134,24 +151,32 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2"
             >
               <button
                 onClick={() => onPageChange('book')}
-                className="px-8 py-4 bg-forest hover:bg-forest-dark text-white rounded-full font-semibold text-sm transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 text-center cursor-pointer"
+                className="px-7 py-3.5 bg-forest hover:bg-forest-dark text-white rounded-full font-semibold text-sm transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 text-center cursor-pointer"
               >
                 Book Appointment
+              </button>
+
+              <button
+                onClick={() => onPageChange('payment')}
+                className="px-6 py-3.5 bg-sage hover:bg-sage-dark text-[#2B2B2B] rounded-full font-semibold text-sm transition-all shadow-sm hover:shadow hover:-translate-y-0.5 text-center flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <CreditCard className="w-4 h-4 text-forest" />
+                <span>Pay Online (₹5,000 / ₹7,500)</span>
               </button>
               
               <button
                 onClick={() => onPageChange('services')}
-                className={`px-8 py-4 rounded-full font-semibold text-sm transition-all text-center flex items-center justify-center gap-2 border cursor-pointer ${
+                className={`px-6 py-3.5 rounded-full font-semibold text-sm transition-all text-center flex items-center justify-center gap-2 border cursor-pointer ${
                   isDarkMode 
                     ? 'border-neutral-700 hover:bg-neutral-800 text-white' 
-                    : 'border-neutral-300 hover:bg-white text-neutral-700'
+                    : 'border-neutral-300 hover:bg-white text-neutral-800'
                 }`}
               >
-                <span>Explore Services</span>
+                <span>Services</span>
                 <ArrowRight className="w-4 h-4 text-sage-dark" />
               </button>
             </motion.div>
@@ -161,19 +186,19 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="pt-6 grid grid-cols-3 gap-6 border-t border-neutral-300/30 dark:border-neutral-800"
+              className="pt-6 grid grid-cols-3 gap-6 border-t border-neutral-300 dark:border-neutral-800"
             >
               <div>
-                <span className={`block text-xl font-serif font-bold ${isDarkMode ? 'text-white' : 'text-charcoal'}`}>15+</span>
-                <span className="block text-[10px] uppercase tracking-widest text-neutral-500 font-semibold font-sans">Years Practice</span>
+                <span className={`block text-xl font-serif font-bold ${isDarkMode ? 'text-white' : 'text-neutral-900'}`}>15+</span>
+                <span className="block text-[10px] uppercase tracking-widest text-neutral-700 dark:text-neutral-400 font-bold font-sans">Years Practice</span>
               </div>
               <div>
-                <span className={`block text-xl font-serif font-bold ${isDarkMode ? 'text-white' : 'text-charcoal'}`}>4,500+</span>
-                <span className="block text-[10px] uppercase tracking-widest text-neutral-500 font-semibold font-sans">Patients Helped</span>
+                <span className={`block text-xl font-serif font-bold ${isDarkMode ? 'text-white' : 'text-neutral-900'}`}>4,500+</span>
+                <span className="block text-[10px] uppercase tracking-widest text-neutral-700 dark:text-neutral-400 font-bold font-sans">Patients Helped</span>
               </div>
               <div>
-                <span className={`block text-xl font-serif font-bold ${isDarkMode ? 'text-white' : 'text-charcoal'}`}>100%</span>
-                <span className="block text-[10px] uppercase tracking-widest text-neutral-500 font-semibold font-sans">Confidential</span>
+                <span className={`block text-xl font-serif font-bold ${isDarkMode ? 'text-white' : 'text-neutral-900'}`}>100%</span>
+                <span className="block text-[10px] uppercase tracking-widest text-neutral-700 dark:text-neutral-400 font-bold font-sans">Confidential</span>
               </div>
             </motion.div>
           </div>
@@ -192,7 +217,7 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
               isDarkMode ? 'border-neutral-800' : 'border-white'
             }`}>
               <img 
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800" 
+                src="/dr-shripuja.jpg" 
                 alt="Dr. Shripuja Siddamsetty - Clinical Psychologist" 
                 referrerPolicy="no-referrer"
                 className="w-full h-[450px] object-cover hover:scale-105 transition-transform duration-700"
@@ -240,13 +265,13 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
               }`}>
                 Deeply Rooted in Science, Guided by Human Empathy
               </h2>
-              <p className={`text-sm leading-relaxed font-light ${
-                isDarkMode ? 'text-neutral-300' : 'text-neutral-600'
+              <p className={`text-sm leading-relaxed font-normal ${
+                isDarkMode ? 'text-neutral-300' : 'text-neutral-800'
               }`}>
                 I believe mental wellness is not merely the absence of distress, but the cultivation of active psychological agility, alignment, and self-compassion. For over 15 years, my mission has been to dismantle toxic emotional loops, bridging advanced clinical diagnostics with intuitive healing spaces.
               </p>
-              <p className={`text-sm leading-relaxed font-light ${
-                isDarkMode ? 'text-neutral-300' : 'text-neutral-600'
+              <p className={`text-sm leading-relaxed font-normal ${
+                isDarkMode ? 'text-neutral-300' : 'text-neutral-800'
               }`}>
                 We work collaboratively to understand your mind's unique architecture, building structured somatic, cognitive, and boundary toolkits that foster sustainable peace and restoration.
               </p>
@@ -270,11 +295,11 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs font-sans uppercase font-bold tracking-widest text-forest">Clinical Focus</span>
           <h2 className={`text-3xl sm:text-4xl font-serif font-bold tracking-tight ${
-            isDarkMode ? 'text-white' : 'text-charcoal'
+            isDarkMode ? 'text-white' : 'text-neutral-900'
           }`}>
             Empathetic, Aligned Specialties
           </h2>
-          <p className={`text-sm font-light ${isDarkMode ? 'text-neutral-400' : 'text-neutral-600'}`}>
+          <p className={`text-sm font-normal ${isDarkMode ? 'text-neutral-300' : 'text-neutral-700'}`}>
             Explore our specialized categories, carefully adapted to support individuals, couples, and organizations seeking healthy transformations.
           </p>
         </div>
@@ -291,16 +316,16 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
                 <div className="w-12 h-12 rounded-2xl bg-sage/15 flex items-center justify-center text-forest mb-6 group-hover:bg-sage/25 transition-colors">
                   <Award className="w-6 h-6" />
                 </div>
-                <span className="text-[10px] font-sans uppercase tracking-widest text-sage-dark font-bold">
+                <span className="text-[10px] font-sans uppercase tracking-widest text-forest font-bold">
                   {service.category}
                 </span>
                 <h3 className={`text-xl font-serif font-bold mt-2 mb-3 ${
-                  isDarkMode ? 'text-white' : 'text-charcoal'
+                  isDarkMode ? 'text-white' : 'text-neutral-900'
                 }`}>
                   {service.title}
                 </h3>
-                <p className={`text-xs leading-relaxed font-light mb-6 ${
-                  isDarkMode ? 'text-neutral-400' : 'text-neutral-500'
+                <p className={`text-xs leading-relaxed font-normal mb-6 ${
+                  isDarkMode ? 'text-neutral-300' : 'text-neutral-700'
                 }`}>
                   {service.shortDescription}
                 </p>
@@ -354,7 +379,7 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
               }`}>
                 A Clinical Philosophy Built on Deep Trust
               </h2>
-              <p className={`text-sm font-light leading-relaxed ${isDarkMode ? 'text-neutral-400' : 'text-neutral-600'}`}>
+              <p className={`text-sm font-normal leading-relaxed ${isDarkMode ? 'text-neutral-300' : 'text-neutral-700'}`}>
                 Seeking psychological support requires immense courage. Our practice is intentionally designed around safety, medical excellence, and restorative comfort.
               </p>
               
@@ -363,19 +388,19 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
                   <div className="w-5 h-5 rounded-full bg-forest/10 flex items-center justify-center shrink-0 text-forest mt-0.5">
                     <ShieldCheck className="w-3 h-3" />
                   </div>
-                  <p className="text-xs font-medium">100% HIPAA-compliant, completely confidential workflows</p>
+                  <p className="text-xs font-semibold text-neutral-800 dark:text-neutral-200">100% HIPAA-compliant, completely confidential workflows</p>
                 </div>
                 <div className="flex gap-3">
                   <div className="w-5 h-5 rounded-full bg-forest/10 flex items-center justify-center shrink-0 text-forest mt-0.5">
                     <UserCheck className="w-3 h-3" />
                   </div>
-                  <p className="text-xs font-medium">Licensed Clinical Doctorate guidance, never coached analogs</p>
+                  <p className="text-xs font-semibold text-neutral-800 dark:text-neutral-200">Licensed Clinical Doctorate guidance, never coached analogs</p>
                 </div>
                 <div className="flex gap-3">
                   <div className="w-5 h-5 rounded-full bg-forest/10 flex items-center justify-center shrink-0 text-forest mt-0.5">
                     <Smile className="w-3 h-3" />
                   </div>
-                  <p className="text-xs font-medium">Warm, low-stimulus clinic physical & digital environments</p>
+                  <p className="text-xs font-semibold text-neutral-800 dark:text-neutral-200">Warm, low-stimulus clinic physical & digital environments</p>
                 </div>
               </div>
             </div>
@@ -387,8 +412,8 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
                 <div className="w-10 h-10 rounded-xl bg-sage/10 text-forest flex items-center justify-center mb-4">
                   <Award className="w-5 h-5" />
                 </div>
-                <h4 className="font-serif text-base font-bold mb-2">Evidence-Based Treatment</h4>
-                <p className="text-xs font-light leading-relaxed text-neutral-500">
+                <h4 className="font-serif text-base font-bold mb-2 text-neutral-900 dark:text-white">Evidence-Based Treatment</h4>
+                <p className="text-xs font-normal leading-relaxed text-neutral-700 dark:text-neutral-300">
                   Every recommendation is rooted in verified neuroscience, Cognitive Behavioral Therapy, and systemic clinical research.
                 </p>
               </div>
@@ -397,8 +422,8 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
                 <div className="w-10 h-10 rounded-xl bg-sage/10 text-forest flex items-center justify-center mb-4">
                   <Heart className="w-5 h-5" />
                 </div>
-                <h4 className="font-serif text-base font-bold mb-2">Empathetic Matching</h4>
-                <p className="text-xs font-light leading-relaxed text-neutral-500">
+                <h4 className="font-serif text-base font-bold mb-2 text-neutral-900 dark:text-white">Empathetic Matching</h4>
+                <p className="text-xs font-normal leading-relaxed text-neutral-700 dark:text-neutral-300">
                   No cookie-cutter counseling templates. We carefully listen to your unique rhythm, matching therapeutic style with your core character.
                 </p>
               </div>
@@ -407,8 +432,8 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
                 <div className="w-10 h-10 rounded-xl bg-sage/10 text-forest flex items-center justify-center mb-4">
                   <Users className="w-5 h-5" />
                 </div>
-                <h4 className="font-serif text-base font-bold mb-2">Systemic Integration</h4>
-                <p className="text-xs font-light leading-relaxed text-neutral-500">
+                <h4 className="font-serif text-base font-bold mb-2 text-neutral-900 dark:text-white">Systemic Integration</h4>
+                <p className="text-xs font-normal leading-relaxed text-neutral-700 dark:text-neutral-300">
                   Addressing emotional blockages within context, actively reviewing family dynamics, professional burnout, and social elements.
                 </p>
               </div>
@@ -417,8 +442,8 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
                 <div className="w-10 h-10 rounded-xl bg-sage/10 text-forest flex items-center justify-center mb-4">
                   <Clock className="w-5 h-5" />
                 </div>
-                <h4 className="font-serif text-base font-bold mb-2">Ongoing Diagnostics</h4>
-                <p className="text-xs font-light leading-relaxed text-neutral-500">
+                <h4 className="font-serif text-base font-bold mb-2 text-neutral-900 dark:text-white">Ongoing Diagnostics</h4>
+                <p className="text-xs font-normal leading-relaxed text-neutral-700 dark:text-neutral-300">
                   Regular, collaborative goal reviews to measure therapy's concrete success and adjust coping frameworks in real time.
                 </p>
               </div>
@@ -434,11 +459,11 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs font-sans uppercase font-bold tracking-widest text-forest">The Timeline</span>
           <h2 className={`text-3xl sm:text-4xl font-serif font-bold tracking-tight ${
-            isDarkMode ? 'text-white' : 'text-charcoal'
+            isDarkMode ? 'text-white' : 'text-neutral-900'
           }`}>
             Your Clinical Healing Journey
           </h2>
-          <p className={`text-sm font-light ${isDarkMode ? 'text-neutral-400' : 'text-neutral-600'}`}>
+          <p className={`text-sm font-normal ${isDarkMode ? 'text-neutral-300' : 'text-neutral-700'}`}>
             A clear, gentle roadmap demonstrating exactly what to expect from your very first consultation to long-term resilient autonomy.
           </p>
         </div>
@@ -452,17 +477,17 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
             >
               {/* Big step number */}
               <div className="flex justify-between items-baseline">
-                <span className="font-mono text-4xl sm:text-5xl font-extrabold text-sage/40">
+                <span className="font-mono text-4xl sm:text-5xl font-extrabold text-forest/40">
                   {step.num}
                 </span>
-                <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-forest bg-sage/10 px-2.5 py-1 rounded-full">
+                <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-forest bg-sage/15 px-2.5 py-1 rounded-full">
                   {step.subtitle}
                 </span>
               </div>
-              <h3 className={`text-lg font-serif font-bold ${isDarkMode ? 'text-white' : 'text-charcoal'}`}>
+              <h3 className={`text-lg font-serif font-bold ${isDarkMode ? 'text-white' : 'text-neutral-900'}`}>
                 {step.title}
               </h3>
-              <p className="text-xs leading-relaxed text-neutral-500 font-light">
+              <p className="text-xs leading-relaxed text-neutral-700 dark:text-neutral-300 font-normal">
                 {step.desc}
               </p>
             </div>
@@ -494,22 +519,22 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
                       <span key={i} className="text-base">★</span>
                     ))}
                   </div>
-                  <p className={`text-sm italic leading-relaxed font-light mb-6 ${
-                    isDarkMode ? 'text-neutral-300' : 'text-neutral-600'
+                  <p className={`text-sm italic leading-relaxed font-normal mb-6 ${
+                    isDarkMode ? 'text-neutral-300' : 'text-neutral-800'
                   }`}>
                     "{test.quote}"
                   </p>
                 </div>
                 <div className="border-t border-neutral-200/50 dark:border-neutral-800 pt-4 flex justify-between items-center">
                   <div>
-                    <h5 className={`font-serif text-sm font-semibold ${isDarkMode ? 'text-white' : 'text-charcoal'}`}>
+                    <h5 className={`font-serif text-sm font-semibold ${isDarkMode ? 'text-white' : 'text-neutral-900'}`}>
                       {test.author}
                     </h5>
-                    <p className="text-[10px] text-neutral-500 font-sans tracking-wide">
+                    <p className="text-[10px] text-neutral-700 dark:text-neutral-400 font-sans tracking-wide font-medium">
                       {test.role}
                     </p>
                   </div>
-                  <span className="text-[10px] font-sans bg-sage/10 text-forest px-3 py-1 rounded-full font-medium">
+                  <span className="text-[10px] font-sans bg-sage/15 text-forest px-3 py-1 rounded-full font-semibold">
                     {test.service}
                   </span>
                 </div>
@@ -528,7 +553,7 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
             <div className="flex justify-between items-end">
               <div>
                 <span className="text-xs font-sans uppercase font-bold tracking-widest text-forest">Media Outreach</span>
-                <h3 className={`text-2xl font-serif font-bold mt-2 ${isDarkMode ? 'text-white' : 'text-charcoal'}`}>
+                <h3 className={`text-2xl font-serif font-bold mt-2 ${isDarkMode ? 'text-white' : 'text-neutral-900'}`}>
                   Mental Wellness Podcasts
                 </h3>
               </div>
@@ -554,13 +579,13 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
                     className="w-24 h-24 object-cover rounded-xl shrink-0 border border-neutral-200/50"
                   />
                   <div className="space-y-2 flex-grow text-center sm:text-left">
-                    <span className="text-[9px] font-mono bg-sage/10 text-forest px-2 py-0.5 rounded-full font-bold">
+                    <span className="text-[9px] font-mono bg-sage/15 text-forest px-2 py-0.5 rounded-full font-bold">
                       {pod.episodeNumber} &bull; {pod.duration}
                     </span>
-                    <h4 className={`font-serif text-sm font-bold ${isDarkMode ? 'text-white' : 'text-charcoal'}`}>
+                    <h4 className={`font-serif text-sm font-bold ${isDarkMode ? 'text-white' : 'text-neutral-900'}`}>
                       {pod.title}
                     </h4>
-                    <p className="text-xs text-neutral-500 font-light line-clamp-2">
+                    <p className="text-xs text-neutral-700 dark:text-neutral-300 font-normal line-clamp-2">
                       {pod.description}
                     </p>
                     <button
@@ -652,6 +677,9 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
         </div>
       </section>
 
+      {/* 8.5 INSTAGRAM & LINKEDIN LIVE SOCIAL FEED */}
+      <SocialFeed isDarkMode={isDarkMode} onPageChange={onPageChange} />
+
       {/* 9. FINAL HIGH-IMPACT CALL TO ACTION */}
       <section className="relative overflow-hidden py-24 px-4 sm:px-6 lg:px-8">
         {/* Soft floating circle */}
@@ -677,6 +705,13 @@ export default function HomeView({ onPageChange, isDarkMode }: HomeViewProps) {
               className="px-8 py-4 bg-forest hover:bg-forest-dark text-white font-semibold text-sm rounded-full shadow-md hover:-translate-y-0.5 transition-all w-full sm:w-auto cursor-pointer"
             >
               Book Consultation Now
+            </button>
+            <button
+              onClick={() => onPageChange('payment')}
+              className="px-8 py-4 bg-sage hover:bg-sage-dark text-[#2B2B2B] font-semibold text-sm rounded-full shadow-md hover:-translate-y-0.5 transition-all w-full sm:w-auto cursor-pointer flex items-center justify-center gap-2"
+            >
+              <CreditCard className="w-4 h-4 text-forest" />
+              <span>Pay Online with Razorpay</span>
             </button>
             <button
               onClick={() => onPageChange('contact')}

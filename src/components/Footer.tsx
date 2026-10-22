@@ -4,8 +4,8 @@
  */
 
 import React, { useState } from 'react';
-import { Mail, ArrowRight, Heart, HeartHandshake, ShieldAlert } from 'lucide-react';
-import { clinicSettings, services } from '../data/websiteData';
+import { Mail, ArrowRight, Heart, HeartHandshake, ShieldAlert, Settings, Lock } from 'lucide-react';
+import { useWebsiteData } from '../context/WebsiteDataContext';
 
 interface FooterProps {
   onPageChange: (page: string) => void;
@@ -13,6 +13,7 @@ interface FooterProps {
 }
 
 export default function Footer({ onPageChange, isDarkMode }: FooterProps) {
+  const { clinicSettings, services } = useWebsiteData();
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
@@ -116,6 +117,22 @@ export default function Footer({ onPageChange, isDarkMode }: FooterProps) {
               ))}
               <li>
                 <button
+                  onClick={() => handleLinkClick('payment')}
+                  className="hover:text-forest text-forest font-semibold transition-colors text-left focus:outline-none cursor-pointer flex items-center gap-1.5"
+                >
+                  <span>Pay Online (Razorpay)</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => handleLinkClick('invoice')}
+                  className="hover:text-forest transition-colors text-left focus:outline-none cursor-pointer flex items-center gap-1.5"
+                >
+                  <span>Generate Tax Invoice</span>
+                </button>
+              </li>
+              <li>
+                <button
                   onClick={() => handleLinkClick('book')}
                   className="text-forest hover:text-forest-dark font-semibold text-left focus:outline-none cursor-pointer"
                 >
@@ -205,7 +222,15 @@ export default function Footer({ onPageChange, isDarkMode }: FooterProps) {
           <p>
             &copy; {new Date().getFullYear()} Dr. Shripuja Siddamsetty — Calm Mind Wellness. All rights reserved.
           </p>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center gap-6">
+            <button
+              onClick={() => handleLinkClick('cms')}
+              className="text-neutral-500 dark:text-neutral-400 hover:text-forest transition-colors flex items-center gap-1 cursor-pointer opacity-80 hover:opacity-100"
+              title="Doctor Administrative Access"
+            >
+              <Lock className="w-2.5 h-2.5" />
+              <span>Doctor Portal</span>
+            </button>
             <a href="#privacy" className="hover:text-forest transition-colors">Privacy Policy</a>
             <a href="#terms" className="hover:text-forest transition-colors">Terms & Conditions</a>
             <span className="text-neutral-300 dark:text-neutral-800">|</span>

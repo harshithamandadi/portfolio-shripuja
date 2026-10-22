@@ -10,6 +10,7 @@ import { ChevronUp, AlertCircle, Heart } from 'lucide-react';
 // Core layout components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import FloatingContact from './components/FloatingContact';
 
 // Views
 import HomeView from './views/HomeView';
@@ -19,10 +20,13 @@ import PodcastsView from './views/PodcastsView';
 import ClassesView from './views/ClassesView';
 import BookingView from './views/BookingView';
 import ContactView from './views/ContactView';
+import PaymentView from './views/PaymentView';
+import InvoiceView from './views/InvoiceView';
+import CmsView from './views/CmsView';
 
-import { clinicSettings } from './data/websiteData';
+import { WebsiteDataProvider, useWebsiteData } from './context/WebsiteDataContext';
 
-export default function App() {
+function AppContent() {
   const [currentPage, setCurrentPage] = useState<string>('home');
   const [preSelectedServiceId, setPreSelectedServiceId] = useState<string | undefined>(undefined);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
@@ -32,7 +36,7 @@ export default function App() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
-      const validPages = ['home', 'about', 'services', 'podcasts', 'classes', 'book', 'contact'];
+      const validPages = ['home', 'about', 'services', 'podcasts', 'classes', 'book', 'payment', 'invoice', 'contact', 'cms'];
       
       if (hash && validPages.includes(hash)) {
         setCurrentPage(hash);
@@ -111,6 +115,12 @@ export default function App() {
             onClearPreSelect={() => setPreSelectedServiceId(undefined)} 
           />
         );
+      case 'payment':
+        return <PaymentView onPageChange={handlePageChange} isDarkMode={isDarkMode} />;
+      case 'invoice':
+        return <InvoiceView onPageChange={handlePageChange} isDarkMode={isDarkMode} />;
+      case 'cms':
+        return <CmsView onPageChange={handlePageChange} isDarkMode={isDarkMode} />;
       case 'contact':
         return <ContactView isDarkMode={isDarkMode} />;
       default:
@@ -119,7 +129,7 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col transition-colors duration-500 relative ${
+    <div className={`min-h-screen w-full max-w-full overflow-x-hidden flex flex-col transition-colors duration-500 relative ${
       isDarkMode ? 'bg-neutral-950 text-white dark' : 'bg-[#F7F5F2] text-[#2B2B2B]'
     }`}>
       
@@ -156,7 +166,10 @@ export default function App() {
       {/* 3. Footer Section */}
       <Footer onPageChange={handlePageChange} isDarkMode={isDarkMode} />
 
-      {/* 4. Floating back to top button */}
+      {/* 4. Floating popping WhatsApp and Call actions */}
+      <FloatingContact isDarkMode={isDarkMode} />
+
+      {/* 5. Floating back to top button */}
       <AnimatePresence>
         {showBackToTop && (
           <motion.button
@@ -165,14 +178,22 @@ export default function App() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             onClick={scrollToTop}
-            className="fixed bottom-6 right-6 z-40 p-3.5 rounded-full bg-forest text-white shadow-xl hover:bg-forest-dark transition-all cursor-pointer hover:-translate-y-1"
+            className="fixed bottom-24 right-6 z-40 p-3 rounded-full bg-neutral-800/80 hover:bg-forest text-white shadow-xl backdrop-blur-md transition-all cursor-pointer hover:-translate-y-1"
             title="Scroll to top"
           >
-            <ChevronUp className="w-5 h-5" />
+            <ChevronUp className="w-4 h-4" />
           </motion.button>
         )}
       </AnimatePresence>
 
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <WebsiteDataProvider>
+      <AppContent />
+    </WebsiteDataProvider>
   );
 }

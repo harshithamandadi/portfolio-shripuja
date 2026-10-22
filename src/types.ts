@@ -39,8 +39,38 @@ export interface PodcastEpisode {
   description: string;
   spotifyUrl: string;
   youtubeUrl: string;
+  youtubeId?: string; // YouTube video ID for embedded in-website player
   appleUrl: string;
   image: string;
+}
+
+export interface SocialPost {
+  id: string;
+  platform: 'instagram' | 'linkedin';
+  author: string;
+  handle: string;
+  avatar: string;
+  title?: string; // primarily for LinkedIn articles/posts
+  caption: string;
+  date: string;
+  imageUrl?: string;
+  postUrl: string;
+  likesCount: number;
+  commentsCount: number;
+  sharesCount?: number;
+  tags: string[];
+}
+
+export interface PaymentConfig {
+  quickAmount1: number;
+  quickAmount2: number;
+  upiId: string;
+  bankName: string;
+  accountNumber: string;
+  ifscCode: string;
+  accountName: string;
+  razorpayKeyId: string;
+  currency: string;
 }
 
 export interface ClassItem {
@@ -101,4 +131,85 @@ export interface FutureBlogItem {
   category: string;
   image: string;
   readTime: string;
+}
+
+export interface PaymentReceipt {
+  paymentId: string;
+  orderId?: string;
+  amount: number; // in INR
+  currency: string;
+  patientName: string;
+  patientEmail: string;
+  patientPhone: string;
+  purpose: string;
+  notes?: string;
+  date: string;
+  receiptNumber: string;
+  status: 'captured' | 'authorized' | 'completed';
+  doctorName: string;
+}
+
+export interface InvoiceItem {
+  id: string;
+  description: string;
+  sacCode?: string;
+  quantity: number;
+  unitPrice: number;
+  total: number;
+}
+
+export interface InvoiceData {
+  invoiceNumber: string;
+  invoiceDate: string;
+  dueDate: string;
+  status: 'PAID' | 'DUE' | 'PENDING' | 'OVERDUE';
+  paymentMode: string;
+  transactionRef?: string;
+  currency: string;
+  currencySymbol: string;
+
+  // Issuer / From Company Details
+  fromName: string;
+  fromTitle: string;
+  fromAddress1: string;
+  fromAddress2: string;
+  fromPhone: string;
+  fromEmail: string;
+  fromGstin?: string;
+  fromPan?: string;
+  fromRegNo?: string;
+  logoUrl?: string;
+
+  // Billed To / Client Details
+  clientType: 'individual' | 'corporate';
+  clientName: string;
+  clientCompany?: string;
+  clientContactPerson?: string;
+  clientEmail: string;
+  clientPhone: string;
+  clientAddress: string;
+  clientGstin?: string;
+  patientId?: string;
+
+  // Line items & calculations
+  items: InvoiceItem[];
+  taxRate: number; // percentage, e.g. 18 for 18%
+  discountType: 'none' | 'percent' | 'fixed';
+  discountValue: number;
+  subtotal: number;
+  taxAmount: number;
+  discountAmount: number;
+  grandTotal: number;
+
+  // Notes & Signatures
+  clinicalNotes?: string;
+  terms: string;
+  bankDetails?: {
+    accountName: string;
+    bankName: string;
+    accountNumber: string;
+    ifscCode: string;
+    upiId: string;
+  };
+  signatureUrl?: string;
 }

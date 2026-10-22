@@ -18,7 +18,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { classes } from '../data/websiteData';
+import { useWebsiteData } from '../context/WebsiteDataContext';
 import { ClassItem } from '../types';
 
 interface ClassesViewProps {
@@ -33,6 +33,7 @@ interface Countdown {
 }
 
 export default function ClassesView({ isDarkMode }: ClassesViewProps) {
+  const { classes } = useWebsiteData();
   const [activeFilter, setActiveFilter] = useState('All');
   const [selectedClass, setSelectedClass] = useState<ClassItem | null>(null);
   
@@ -197,24 +198,24 @@ export default function ClassesView({ isDarkMode }: ClassesViewProps) {
                       {item.title}
                     </h3>
                     
-                    <p className="text-xs text-neutral-500 font-light leading-relaxed">
+                    <p className="text-xs text-neutral-700 dark:text-neutral-300 font-normal leading-relaxed">
                       {item.description}
                     </p>
 
                     {/* Class facts metadata */}
                     <div className="grid grid-cols-2 gap-4 text-xs pt-2">
                       <div className="space-y-1">
-                        <span className="block text-[10px] text-neutral-500 font-sans uppercase font-semibold">Date & Time</span>
-                        <p className="font-semibold flex items-center gap-1.5">
+                        <span className="block text-[10px] text-neutral-600 dark:text-neutral-400 font-sans uppercase font-semibold">Date & Time</span>
+                        <p className="font-semibold flex items-center gap-1.5 text-neutral-900 dark:text-white">
                           <Calendar className="w-4 h-4 text-forest" />
                           <span>{item.date}</span>
                         </p>
-                        <p className="text-neutral-500 font-light pl-5">{item.time}</p>
+                        <p className="text-neutral-700 dark:text-neutral-300 font-normal pl-5">{item.time}</p>
                       </div>
 
                       <div className="space-y-1">
-                        <span className="block text-[10px] text-neutral-500 font-sans uppercase font-semibold">Tuition & Fee</span>
-                        <p className="font-semibold flex items-center gap-1">
+                        <span className="block text-[10px] text-neutral-600 dark:text-neutral-400 font-sans uppercase font-semibold">Tuition & Fee</span>
+                        <p className="font-semibold flex items-center gap-1 text-neutral-900 dark:text-white">
                           <DollarSign className="w-4 h-4 text-forest" />
                           <span>{item.fee}</span>
                         </p>
@@ -227,7 +228,7 @@ export default function ClassesView({ isDarkMode }: ClassesViewProps) {
                     
                     <div className="space-y-1.5">
                       <div className="flex justify-between items-center text-[10px] font-sans font-bold">
-                        <span className="text-neutral-500 uppercase tracking-wider flex items-center gap-1.5">
+                        <span className="text-neutral-700 dark:text-neutral-400 uppercase tracking-wider flex items-center gap-1.5">
                           <Users className="w-4 h-4" />
                           <span>Seat Capacity</span>
                         </span>
@@ -246,7 +247,7 @@ export default function ClassesView({ isDarkMode }: ClassesViewProps) {
                     </div>
 
                     <div className="flex justify-between items-center gap-4 flex-wrap pt-2">
-                      <p className="text-[10px] text-neutral-500 font-sans tracking-wide">
+                      <p className="text-[10px] text-neutral-700 dark:text-neutral-400 font-sans tracking-wide">
                         Instructor: <strong className="text-forest">{item.instructor}</strong>
                       </p>
                       
@@ -314,15 +315,15 @@ export default function ClassesView({ isDarkMode }: ClassesViewProps) {
                     <h3 className="font-serif text-xl sm:text-2xl font-bold tracking-tight">
                       Register Seat
                     </h3>
-                    <p className="text-xs text-neutral-500 font-light leading-relaxed">
-                      You are reserving a seat for: <strong>{selectedClass.title}</strong> led by {selectedClass.instructor}.
+                    <p className="text-xs text-neutral-700 dark:text-neutral-300 font-normal leading-relaxed">
+                      You are reserving a seat for: <strong className="text-neutral-900 dark:text-white">{selectedClass.title}</strong> led by {selectedClass.instructor}.
                     </p>
                   </div>
 
                   <div className="space-y-4">
                     {/* Full Name */}
                     <div className="space-y-1">
-                      <label className="block text-[10px] font-sans uppercase font-bold text-neutral-400">Full Name</label>
+                      <label className="block text-[10px] font-sans uppercase font-bold text-neutral-700 dark:text-neutral-300">Full Name</label>
                       <input
                         type="text"
                         required
@@ -339,7 +340,7 @@ export default function ClassesView({ isDarkMode }: ClassesViewProps) {
 
                     {/* Email Address */}
                     <div className="space-y-1">
-                      <label className="block text-[10px] font-sans uppercase font-bold text-neutral-400">Email Address</label>
+                      <label className="block text-[10px] font-sans uppercase font-bold text-neutral-700 dark:text-neutral-300">Email Address</label>
                       <input
                         type="email"
                         required
@@ -356,7 +357,7 @@ export default function ClassesView({ isDarkMode }: ClassesViewProps) {
 
                     {/* WhatsApp or Mobile Phone */}
                     <div className="space-y-1">
-                      <label className="block text-[10px] font-sans uppercase font-bold text-neutral-400">WhatsApp / Mobile Phone</label>
+                      <label className="block text-[10px] font-sans uppercase font-bold text-neutral-700 dark:text-neutral-300">WhatsApp / Mobile Phone</label>
                       <input
                         type="tel"
                         placeholder="+1 (555) 019-2834"
@@ -372,7 +373,7 @@ export default function ClassesView({ isDarkMode }: ClassesViewProps) {
 
                     {/* Reason for attending */}
                     <div className="space-y-1">
-                      <label className="block text-[10px] font-sans uppercase font-bold text-neutral-400">Reason for Attending (Optional)</label>
+                      <label className="block text-[10px] font-sans uppercase font-bold text-neutral-700 dark:text-neutral-300">Reason for Attending (Optional)</label>
                       <textarea
                         rows={3}
                         placeholder="Looking to master coping techniques for stress or work burnout..."
@@ -420,20 +421,20 @@ export default function ClassesView({ isDarkMode }: ClassesViewProps) {
                     <h4 className="font-serif text-2xl font-bold tracking-tight text-forest">
                       Reservation Requested!
                     </h4>
-                    <p className="text-sm font-light text-neutral-500 max-w-md mx-auto">
-                      Thank you, <strong>{formData.name}</strong>. Your seat reservation request for <strong>{selectedClass.title}</strong> has been logged.
+                    <p className="text-sm font-normal text-neutral-700 dark:text-neutral-300 max-w-md mx-auto">
+                      Thank you, <strong className="text-neutral-900 dark:text-white">{formData.name}</strong>. Your seat reservation request for <strong>{selectedClass.title}</strong> has been logged.
                     </p>
                   </div>
 
                   <div className="p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-950 text-left border border-neutral-200/40 text-xs font-mono space-y-2 max-w-sm mx-auto">
-                    <p className="text-neutral-500 font-sans uppercase text-[10px] tracking-wide font-bold">Registration Docket:</p>
+                    <p className="text-neutral-700 dark:text-neutral-400 font-sans uppercase text-[10px] tracking-wide font-bold">Registration Docket:</p>
                     <p>• Status: <strong className="text-forest">PENDING INVOICE</strong></p>
                     <p>• Class: {selectedClass.title}</p>
                     <p>• Date: {selectedClass.date}</p>
                     <p>• Tuition: {selectedClass.fee}</p>
                   </div>
 
-                  <p className="text-xs text-neutral-500 font-light leading-relaxed max-w-sm mx-auto">
+                  <p className="text-xs text-neutral-700 dark:text-neutral-300 font-normal leading-relaxed max-w-sm mx-auto">
                     An email containing the diagnostic checklist, payment details, and safe session credentials has been forwarded to <strong>{formData.email}</strong>.
                   </p>
 

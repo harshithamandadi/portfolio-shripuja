@@ -314,15 +314,16 @@ export const services: ServiceItem[] = [
 export const podcasts: PodcastEpisode[] = [
   {
     id: "pod-1",
-    title: "Understanding High-Functioning Anxiety",
+    title: "Mindful Scrolling: A Clinical Approach to Teen Digital Health",
     episodeNumber: "Episode 42",
     duration: "34 mins",
     date: "July 2, 2026",
-    category: "Anxiety",
-    description: "In this episode, Dr. Shripuja Siddamsetty breaks down the silent struggle of high-functioning anxiety. Learn why high achievers are prone to this, how to spot the signs beneath professional success, and evidence-based self-regulation techniques to find calm without sacrificing your drive.",
-    spotifyUrl: "https://open.spotify.com/episode/placeholder1",
-    youtubeUrl: "https://youtube.com/watch?v=placeholder1",
-    appleUrl: "https://podcasts.apple.com/us/podcast/placeholder1",
+    category: "Teen Digital Health",
+    description: "In this keynote session presented with the Council for Digital Safety and Wellbeing, Dr. Shripuja Siddamsetty breaks down the silent struggle of digital fatigue, doomscrolling, and teenage mental health. Learn practical, evidence-based self-regulation techniques to find calm without feeling isolated from the digital world.",
+    spotifyUrl: "https://open.spotify.com",
+    youtubeUrl: "https://www.youtube.com/watch?v=kJQP7kiw5Fk",
+    youtubeId: "kJQP7kiw5Fk",
+    appleUrl: "https://podcasts.apple.com",
     image: "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&q=80&w=600"
   },
   {
